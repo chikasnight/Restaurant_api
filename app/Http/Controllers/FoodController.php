@@ -35,18 +35,18 @@ class FoodController extends Controller
         // move image to temp location (tmp disk)
         $tmp = $image->storeAs('uploads/original', $filename, 'tmp');
  
-        $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+    
+        /*if( !Hash::check(auth('sanctum')->user()->id(), 1)){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',
                 
             ]);
 
-        }
+        }*/
 
         //create a groups
-        $newFood = Food::create([
+        $newfood = Food::create([
             'user_id'=>auth()->id(),
             'name'=> $request->name,
             'price'=> $request->price,
@@ -65,7 +65,7 @@ class FoodController extends Controller
         return response()->json([
             'success'=> true,
             'message'=>'successfully created a food',
-            'data' => $newFood
+            'data' => $newfood
         ]);
     }
     public function editfood(Request $request, $userId){

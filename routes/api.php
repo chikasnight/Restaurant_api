@@ -9,25 +9,31 @@ use App\Http\Controllers\RestaurantInfoController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\UserController;
 
-Route::post('foods',[FoodController::class,'createFood']);
-Route::put('foods/{postId}', [FoodController::class, 'editfood']);
-Route::delete('foods/{postId}', [FoodController::class, 'deleteFood']);
 
-Route::post('groups', [GroupsController::class, 'createGroup']);
-Route::put('groups/{commentId}', [GroupsController::class, 'editGroup']);
+Route::group(['middleware' =>'auth:sanctum'],function(){
+    Route::post('foods',[FoodController::class,'createFood']);
+    Route::put('foods/{postId}', [FoodController::class, 'editfood']);
+    Route::delete('foods/{postId}', [FoodController::class, 'deleteFood']);
 
-Route::post('stores', [StoresController::class, 'createStore']);
-Route::put('stores/{commentId}', [StoresController::class, 'editStore']);
+    Route::post('groups', [GroupsController::class, 'createGroup']);
+    Route::put('groups/{commentId}', [GroupsController::class, 'editGroup']);
 
-Route::post('restaurantInfo', [RestaurantInfoController::class, 'createInfo']);
-Route::put('restaurantInfo/{commentId}', [RestaurantInfoController::class, 'editInfo']);
+    Route::post('stores', [StoresController::class, 'createStore']);
+    Route::put('stores/{commentId}', [StoresController::class, 'editStore']);
 
-Route::post('table', [TableController::class, 'createTable']);
-Route::put('table/{commentId}', [TableController::class, 'editTable']);
+    Route::post('restaurantInfo', [RestaurantInfoController::class, 'createInfo']);
+    Route::put('restaurantInfo/{commentId}', [RestaurantInfoController::class, 'editInfo']);
 
-Route::delete('delete/user', [UserController::class, 'deleteUser']);
-Route::post('change/password', [UserController::class, 'changePassword']);
-Route::post('logout', [UserController::class, 'logout']);
+    Route::post('table', [TableController::class, 'createTable']);
+    Route::put('table/{commentId}', [TableController::class, 'editTable']);
+
+    Route::delete('delete/user', [UserController::class, 'deleteUser']);
+    Route::post('change/password', [UserController::class, 'changePassword']);
+    Route::post('logout', [UserController::class, 'logout']);
+    Route::post('edit/user',[UserController::class,'editUser']);
+
+});
+
+
 Route::post('login',[UserController::class,'login']);
-Route::post('register',[UserController::class,'register']);
-Route::post('edit/user',[UserController::class,'editUser']);
+Route::post('reg',[UserController::class,'register']);
