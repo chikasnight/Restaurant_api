@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Food;
+use App\Models\Table;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FoodPolicy
+class TablePolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class FoodPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Food  $food
+     * @param  \App\Models\Table  $table
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Food $food)
+    public function view(User $user, Table $table)
     {
         //
     }
@@ -48,34 +48,34 @@ class FoodPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Food  $food
+     * @param  \App\Models\Table  $table
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Food $food)
+    public function update(User $user, Table $table)
     {
-        return  $user->id === $food->user_id;
+        return  $user->id === $stores->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Food  $food
+     * @param  \App\Models\Table  $table
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Food $food)
+    public function delete(User $user, Table $table)
     {
-        return  $user->id === $food->user_id;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Food  $food
+     * @param  \App\Models\Table  $table
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Food $food)
+    public function restore(User $user, Table $table)
     {
         //
     }
@@ -84,10 +84,10 @@ class FoodPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Food  $food
+     * @param  \App\Models\Table  $table
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Food $food)
+    public function forceDelete(User $user, Table $table)
     {
         //
     }

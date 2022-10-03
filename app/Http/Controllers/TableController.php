@@ -23,7 +23,7 @@ class TableController extends Controller
         ]);
 
         $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+        if( $user->id !== 1){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',
@@ -53,7 +53,7 @@ class TableController extends Controller
             'data' => $newTable
         ]);
     }
-    public function editTable(Request $request, $userId){
+    public function editTable(Request $request, $tableId){
         $request->validate([
             'table_1'=>['required'],
             'table_2'=>['required'],
@@ -64,6 +64,8 @@ class TableController extends Controller
             'table_7'=>['required'],
         ]);
         
+        $this->authorize('update',$table);
+
         $table = Table::find($tableId);
         if(!$table) {
             return response() ->json([
@@ -73,15 +75,7 @@ class TableController extends Controller
 
         }
         
-        $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
-            return response()->json([
-                'success'=> false,
-                'message'=>'This User is not Authorized',
-                
-            ]);
-
-        }
+       
 
         $table->table_1 = $request->table_1;
         $table->table_2 = $request->table_2;

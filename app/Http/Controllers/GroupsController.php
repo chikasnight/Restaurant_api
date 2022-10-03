@@ -21,7 +21,7 @@ class GroupsController extends Controller
         ]);
 
         $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+        if( $user->id !== 1){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',
@@ -48,7 +48,7 @@ class GroupsController extends Controller
             'data' => $newGroup
         ]);
     }
-    public function editGroup(Request $request, $userId){
+    public function editGroup(Request $request, $groupsId){
         $request->validate([
             'anonymous'=>['required'],
             'admin'=>['required'],
@@ -56,9 +56,11 @@ class GroupsController extends Controller
             'staff'=>['required'],
 
         ]);
-        
-        $group = Groups::find($groupId);
-        if(!$group) {
+
+        $this->authorize('update',$groups);
+
+        $groups = Groups::find($groupsId);
+        if(!$groups) {
             return response() ->json([
                 'success' => false,
                 'message' => 'group not found'
@@ -66,24 +68,16 @@ class GroupsController extends Controller
 
         }
         
-        $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
-            return response()->json([
-                'success'=> false,
-                'message'=>'This User is not Authorized',
-                
-            ]);
+       
 
-        }
-
-        $group->anonymous = $request->anonymous;
-        $group->admin = $request->admin;
-        $group->members = $request->members;
-        $group->staff = $request->staff;
-        $group->save();
+        $groups->anonymous = $request->anonymous;
+        $groups->admin = $request->admin;
+        $groups->members = $request->members;
+        $groups->staff = $request->staff;
+        $groups->save();
         return response() ->json([
             'success' => true,
-            'message' => 'group updated'
+            'message' => 'groups updated'
         ]);
     }
 }

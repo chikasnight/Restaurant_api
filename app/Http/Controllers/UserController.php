@@ -101,7 +101,7 @@ class UserController extends Controller
 
         
         $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+        if( $user->id !== 1){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',
@@ -137,7 +137,7 @@ class UserController extends Controller
         }
 
         $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+        if( $user->id !== 1){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',

@@ -12,20 +12,20 @@ use App\Http\Controllers\UserController;
 
 Route::group(['middleware' =>'auth:sanctum'],function(){
     Route::post('foods',[FoodController::class,'createFood']);
-    Route::put('foods/{postId}', [FoodController::class, 'editfood']);
-    Route::delete('foods/{postId}', [FoodController::class, 'deleteFood']);
+    Route::put('foods/{foodId}', [FoodController::class, 'editfood']);
+    Route::delete('foods/{foodId}', [FoodController::class, 'deleteFood']);
 
     Route::post('groups', [GroupsController::class, 'createGroup']);
-    Route::put('groups/{commentId}', [GroupsController::class, 'editGroup']);
+    Route::put('groups/{groupsId}', [GroupsController::class, 'editGroup']);
 
     Route::post('stores', [StoresController::class, 'createStore']);
-    Route::put('stores/{commentId}', [StoresController::class, 'editStore']);
+    Route::put('stores/{storesId}', [StoresController::class, 'editStore']);
 
     Route::post('restaurantInfo', [RestaurantInfoController::class, 'createInfo']);
-    Route::put('restaurantInfo/{commentId}', [RestaurantInfoController::class, 'editInfo']);
+    Route::put('restaurantInfo/{restaurantInfoId}', [RestaurantInfoController::class, 'editInfo']);
 
     Route::post('table', [TableController::class, 'createTable']);
-    Route::put('table/{commentId}', [TableController::class, 'editTable']);
+    Route::put('table/{tableId}', [TableController::class, 'editTable']);
 
     Route::delete('delete/user', [UserController::class, 'deleteUser']);
     Route::post('change/password', [UserController::class, 'changePassword']);

@@ -22,7 +22,7 @@ class StoresController extends Controller
         ]);
 
         $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
+        if( $user->id !== 1){
             return response()->json([
                 'success'=> false,
                 'message'=>'This User is not Authorized',
@@ -49,7 +49,7 @@ class StoresController extends Controller
             'data' => $newStore
         ]);
     }
-    public function editStore(Request $request, $userId){
+    public function editStore(Request $request, $storesId){
         $request->validate([
             'fine_dinning'=>['required'],
             'fast_food'=>['required'],
@@ -57,34 +57,28 @@ class StoresController extends Controller
             'cafe'=>['required'],
 
         ]);
-        
-        $store = Stores::find($storeId);
-        if(!$store) {
+
+        $this->authorize('update',$stores);
+
+        $stores = Stores::find($storesId);
+        if(!$stores) {
             return response() ->json([
                 'success' => false,
-                'message' => 'store not found'
+                'message' => 'stores not found'
             ]);
 
         }
         
-        $user= auth('sanctum')->user();
-        if( !Hash::check( $user->id(), 1)){
-            return response()->json([
-                'success'=> false,
-                'message'=>'This User is not Authorized',
-                
-            ]);
+        
 
-        }
-
-        $store->fine_dinning = $request->fine_dinning;
-        $store->fast_food = $request->fast_food;
-        $store->buffet = $request->buffet;
-        $store->cafe = $request->cafe;
-        $store->save();
+        $stores->fine_dinning = $request->fine_dinning;
+        $stores->fast_food = $request->fast_food;
+        $stores->buffet = $request->buffet;
+        $stores->cafe = $request->cafe;
+        $stores->save();
         return response() ->json([
             'success' => true,
-            'message' => 'store updated'
+            'message' => 'stores updated'
         ]);
     }
 }
